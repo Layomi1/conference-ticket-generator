@@ -7,6 +7,7 @@ export default {
         "midnight-teal": "#197686",
         "light-teal": "#0e464f",
         "text-teal": "#24a0b5",
+        gray: "#FAFAFA",
       },
       backgroundColor: {
         "midnight-teal": "#197686",
@@ -25,5 +26,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };

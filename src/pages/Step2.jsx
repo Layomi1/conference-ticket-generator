@@ -4,10 +4,30 @@ import Button from "../components/Button";
 import envelope from "../assets/images/envelope.png";
 import { useDropzone } from "react-dropzone";
 import cloud from "../assets/images/cloud.png";
+import Heading from "../components/Heading";
 
-const Step2 = ({ name, email, message, updatedFields }) => {
+const Step2 = () => {
   const [dataUrl, setDataUrl] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
   const [uploadedUrl, setUploadedUrl] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      name,
+      email,
+      message,
+      profilePhoto: dataUrl,
+    };
+    localStorage.setItem("attendeeData", JSON.stringify(formData));
+    setName("");
+    setEmail("");
+    setMessage("");
+  };
+
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     const reader = new FileReader();
@@ -21,38 +41,40 @@ const Step2 = ({ name, email, message, updatedFields }) => {
 
   return (
     <>
-      <header className=" flex justify-between items-center pb-3   md:flex-row  ">
-        <h1 className="text-2xl md:text-[32px] font-jejuMyeongjo">
-          Attendee Details
-        </h1>
-        <p className="">Step 2/3</p>
+      <header className=" flex justify-between items-center pb-3   md:flex-row">
+        <Heading title="Attendee Details" />
       </header>
-      <Divider isProgressbar={true} progressWidth={"232px"} />
-      <form className=" w-full mt-8 flex flex-col gap-8 rounded-4xl border-[1px] border-[#0E464F] p-6 ">
-        <article className="bg-gradient-to-b from-[#07373F] to-[#0A0C11] px-6 pt-6 pb-7 flex  flex-col items-center justify-center rounded-3xl mb-8">
-          <h3>Upload Profile Photo</h3>
-          <article
-            {...getRootProps()}
-            className="grid place-items-center bg-[#0A0C11] "
-          >
-            <input {...getInputProps()} />
-            {dataUrl ? (
-              <img
-                src={dataUrl}
-                alt="Uploaded"
-                className="w-32 h-32 rounded-full"
-              />
-            ) : (
-              <div className="flex flex-col items-center">
-                <img src={cloud} alt="cloud" className="w-12 h-12" />
-                <p className="text-sm text-gray-400">
-                  Drag & drop or click to upload
-                </p>
-              </div>
-            )}
+      <Divider isProgressbar={true} progress="54%" />
+      <form
+        onSubmit={handleSubmit}
+        className=" w-full mt-8 flex flex-col gap-8 rounded-4xl border-[1px] border-[#0E464F] p-6 "
+      >
+        <article className="bg-[#bg-light-teal pt-6 pb-7 flex px-6  flex-col items-center justify-center  mb-8 relative ">
+          <h3 className="absolute -top-6 left-[5%] ">Upload Profile Photo</h3>
+          <article className="bg-black -z-2 w-full h-[200px] relative">
+            <article
+              {...getRootProps()}
+              className=" absolute -top-8 left-[25%] grid place-items-center bg-light-teal rounded-[12px] p- border-4 border-midnight-teal mt-3  w-[240px]  h-[240px]"
+            >
+              <input {...getInputProps()} />
+              {dataUrl ? (
+                <img
+                  src={dataUrl}
+                  alt="Uploaded"
+                  className="w-32 h-32 rounded-full"
+                />
+              ) : (
+                <div className="flex flex-col gap-4 items-center">
+                  <img src={cloud} alt="cloud" className="w-12 h-12" />
+                  <p className="text-sm text-gray-400 px-6 text-center">
+                    Drag & drop or click to upload
+                  </p>
+                </div>
+              )}
+            </article>
           </article>
         </article>
-        <Divider isProgressbar={false} progressWidth="0" />
+        <Divider isProgressbar={false} progress="0" />
 
         <article className="grid gap-8 ">
           <article className="grid gap-2 ">
@@ -61,7 +83,7 @@ const Step2 = ({ name, email, message, updatedFields }) => {
               type="text"
               className="px-[14px] py-4 rounded-[8px] bg-transparent border-light-teal border-[1px]"
               value={name}
-              onChange={(e) => updatedFields({ name: e.target.value })}
+              onChange={(e) => setName(e.target.value)}
             />
           </article>
           <article article className="grid gap-2">
@@ -74,7 +96,7 @@ const Step2 = ({ name, email, message, updatedFields }) => {
                 placeholder="hello@avioflagos.io"
                 className="bg-transparent outline-none"
                 value={email}
-                onChange={(e) => updatedFields({ email: e.target.value })}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </article>
           </article>
@@ -87,7 +109,7 @@ const Step2 = ({ name, email, message, updatedFields }) => {
               rows="3"
               className="p-3 rounded-[8px] bg-transparent border-light-teal border-[1px]"
               value={message}
-              onChange={(e) => updatedFields({ message: e.target.value })}
+              onChange={(e) => setMessage(e.target.value)}
             ></textarea>
           </article>
 
