@@ -19,7 +19,7 @@ const Main = () => {
 
       {/* <div>{step}</div> */}
       <div>
-        <Step2 />
+        <Step1 />
       </div>
     </section>
   );

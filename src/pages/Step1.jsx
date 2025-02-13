@@ -3,13 +3,20 @@ import Divider from "../components/Divider";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import RadioButton from "../components/RadioButton";
-// import RadioGroup from "../context/GlobalContext";
 
 const Step1 = () => {
-  const [selectedValue, setSelectedValue] = useState("regular");
+  // const [access, setAccess] = useState("regular");
+  const [selectedValue, setSelectedValue] = useState(1);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formdata = new FormData(e.currentValue);
+    const access = formdata.get("access");
+    console.log(access);
+
+    // localStorage.setItem("attendeeData", JSON.stringify(formdata));
+    // setAccess("regular");
+    // setSelectedValue(1);
   };
 
   return (
@@ -39,12 +46,8 @@ const Step1 = () => {
 
         <form className="mt-8" onSubmit={handleSubmit} method="POST">
           <p className="mb-2">Select Ticket Type:</p>
-          {/* <RadioGroup
-            name="access"
-            value={selectedValue}
-            onChange={(e) => setSelectedValue(e.target.value)}
-          > */}
-          <article className="w-full p-4 flex flex-col  md:flex-row gap-[25px] items-center  rounded-3xl mb-8  border-light-teal border-[1px]">
+
+          <fieldset className="w-full p-4 flex flex-col  md:flex-row gap-[25px] items-center  rounded-3xl mb-8  border-light-teal border-[1px]">
             <RadioButton
               title="Free"
               access="Regular Access"
@@ -52,6 +55,7 @@ const Step1 = () => {
               id="regular"
               name="access"
               seat="20/50"
+              isDefaultValue="true"
             />
             <RadioButton
               value="vip"
@@ -60,6 +64,7 @@ const Step1 = () => {
               title="$150"
               access="VIP Access"
               seat="20/50"
+              isDefaultValue
             />
             <RadioButton
               value="vvip"
@@ -68,15 +73,18 @@ const Step1 = () => {
               title="$150"
               access="VVIP Access"
               seat="20/50"
+              isDefaultValue
             />
-          </article>
-          {/* </RadioGroup> */}
+          </fieldset>
+
           <article className="mt-8 ">
-            <p className="mb-2">Number of Tickets</p>
+            <label htmlFor="nnumber" className="mb-2">
+              Number of Tickets
+            </label>
 
             <select
               name="number"
-              id=""
+              id="numder"
               className="w-full  grid p-3 bg-transparent grid-cols-2 gap-6 items-center rounded-[8px] mb-8  border-light-teal border-[1px]"
             >
               <option defaultValue>1</option>
@@ -112,7 +120,6 @@ const Step1 = () => {
             </Button>
           </article>
         </form>
-        <p>selected: {selectedValue}</p>
       </main>
     </>
   );
